@@ -1,0 +1,26 @@
+{
+	"name": "@ghostebony/imdb",
+	"version": "0.0.1",
+	"main": "dist/index.js",
+	"author": "Pedro Américo",
+	"license": "MIT",
+	"repository": "github:ghostebony/imdb",
+	"scripts": {
+		"preinstall": "npx only-allow pnpm",
+		"build": "tsc --build",
+		"clean": "tsc --build --clean",
+		"build:clean": "pnpm run clean && pnpm run build"
+	},
+	"devDependencies": {
+		"prettier": "^2.7.1",
+		"typescript": "^4.7.4"
+	},
+	"keywords": [
+		"calendar",
+		"day",
+		"week",
+		"year",
+		"date"
+	],
+	"type": "module"
+}
