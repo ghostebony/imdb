@@ -1,3 +1,4 @@
+import type * as Types from "./types";
 import { IMDB_GRAPHQL_URL, IMDB_URL, request, urlReplacer } from "./utils";
 
 export default class IMDb {
@@ -101,6 +102,56 @@ export default class IMDb {
 					method: "DELETE",
 				}
 			),
+	};
+
+	public list = {
+		add: async (id: Types.TitleId, listId: Types.ListId) =>
+			this.request<{
+				data: {
+					addItemToList: { listId: Types.ListId; __typename: "ModifiedListOutput" };
+				};
+				extensions: {
+					disclaimer: string;
+				};
+			}>(this.imdbGraphqlUrl, {
+				method: "POST",
+				body: {
+					query: `
+					mutation AddConstToList($listId: ID!, $constId: ID!) {
+						addItemToList(input: {listId: $listId, item: {itemElementId: $constId}}) {
+							listId __typename
+						}
+					}`,
+					operationName: "AddConstToList",
+					variables: { listId, constId: id },
+				},
+				headers: { "content-type": "application/json" },
+			}),
+		remove: async (id: Types.TitleId, listId: Types.ListId) =>
+			this.request<{
+				data: {
+					removeElementFromList: {
+						listId: Types.ListId;
+						__typename: "ModifiedListOutput";
+					} | null;
+				};
+				extensions: {
+					disclaimer: string;
+				};
+			}>(this.imdbGraphqlUrl, {
+				method: "POST",
+				body: {
+					query: `
+					mutation RemoveConstFromList($listId: ID!, $constId: ID!) {
+						removeElementFromList(input: {listId: $listId, itemElementId: $constId}) {
+							listId __typename
+						}
+					}`,
+					operationName: "RemoveConstFromList",
+					variables: { listId, constId: id },
+				},
+				headers: { "content-type": "application/json" },
+			}),
 	};
 
 	private request = <dataType>(
