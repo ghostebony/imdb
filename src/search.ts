@@ -58,6 +58,27 @@ export default class IMDbSearch {
 		return items;
 	};
 
+	public searchTitles = async (query: string) => {
+		const cq = cleanQuery(query);
+
+		const { data } = await request<Types.SearchContainer>(
+			urlReplacer(this.searchTitleUrl, { q: cq[0], query: cq }),
+			{ params: { includeVideos: this.includeVideos } }
+		);
+		if (!data) return [];
+
+		const titles = [];
+
+		if ("d" in data) {
+			for (const title of data.d) {
+				if (!!title.qid && !this.searchExclude.includes(title.qid)) {
+					titles.push(this.searchTitlesModel(title));
+				}
+			}
+		}
+		return titles;
+	};
+
 	private searchTitlesModel = (title: Types.Search) => ({
 		id: title.id,
 		title: title.l,
