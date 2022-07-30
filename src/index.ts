@@ -86,6 +86,23 @@ export default class IMDb {
 			}),
 	};
 
+	public watchlist = {
+		add: async (id: Types.TitleId) =>
+			this.request<{ list_id: Types.ListId; list_item_id: `${number}`; status: number }>(
+				urlReplacer(this.watchlistUrl, { id }),
+				{
+					method: "PUT",
+				}
+			),
+		remove: async (id: Types.TitleId) =>
+			this.request<{ list_id: Types.ListId; status: number }>(
+				urlReplacer(this.watchlistUrl, { id }),
+				{
+					method: "DELETE",
+				}
+			),
+	};
+
 	private request = <dataType>(
 		endpoint: string,
 		init: {
