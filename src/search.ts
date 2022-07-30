@@ -79,6 +79,25 @@ export default class IMDbSearch {
 		return titles;
 	};
 
+	public searchNames = async (query: string) => {
+		const cq = cleanQuery(query);
+
+		const { data } = await request<Types.SearchContainer>(
+			urlReplacer(this.searchNameUrl, { q: cq[0], query: cq }),
+			{ params: { includeVideos: this.includeVideos } }
+		);
+		if (!data) return [];
+
+		const names = [];
+
+		if ("d" in data) {
+			for (const name of data.d) {
+				names.push(this.searchNamesModel(name));
+			}
+		}
+		return names;
+	};
+
 	private searchTitlesModel = (title: Types.Search) => ({
 		id: title.id,
 		title: title.l,
