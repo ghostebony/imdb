@@ -17,11 +17,8 @@
 		"typescript": "^4.7.4"
 	},
 	"keywords": [
-		"calendar",
-		"day",
-		"week",
-		"year",
-		"date"
+		"imdb",
+		"api"
 	],
 	"type": "module"
 }
