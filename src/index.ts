@@ -28,6 +28,64 @@ export default class IMDb {
 		}
 	}
 
+	public title = {
+		rate: async (id: Types.TitleId, rating: Types.RatingRange) =>
+			this.request<{
+				data: {
+					rateTitle: {
+						rating: { value: Types.RatingRange; __typename: "Rating" };
+						__typename: "RatingOutput";
+					};
+				};
+				extensions: {
+					disclaimer: string;
+				};
+			}>(this.imdbGraphqlUrl, {
+				method: "POST",
+				body: {
+					query: `
+						mutation UpdateTitleRating($rating: Int!, $titleId: ID!) {
+							rateTitle(input: {rating: $rating, titleId: $titleId}) {
+								rating {
+									value __typename
+								}
+								__typename
+							}
+						}
+					`,
+					operationName: "UpdateTitleRating",
+					variables: { rating, titleId: id },
+				},
+				headers: { "content-type": "application/json" },
+			}),
+		unrate: async (id: Types.TitleId) =>
+			this.request<{
+				data: {
+					deleteTitleRating: {
+						date: string;
+						__typename: "DeleteTitleRatingOutput";
+					};
+				};
+				extensions: {
+					disclaimer: string;
+				};
+			}>(this.imdbGraphqlUrl, {
+				method: "POST",
+				body: {
+					query: `
+						mutation DeleteTitleRating($titleId: ID!) {
+							deleteTitleRating(input: {titleId: $titleId}) {
+								date __typename
+							}
+						}
+					`,
+					operationName: "DeleteTitleRating",
+					variables: { titleId: id },
+				},
+				headers: { "content-type": "application/json" },
+			}),
+	};
+
 	private request = <dataType>(
 		endpoint: string,
 		init: {
