@@ -9,6 +9,7 @@
 		"preinstall": "npx only-allow pnpm",
 		"build": "tsc --build",
 		"clean": "tsc --build --clean",
+		"build:watch": "tsc --build --watch",
 		"build:clean": "pnpm run clean && pnpm run build"
 	},
 	"devDependencies": {
