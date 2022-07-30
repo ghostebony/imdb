@@ -32,4 +32,48 @@ export default class IMDbSearch {
 			this.includeVideos = 1;
 		}
 	}
+
+	public searchMulti = async (query: string) => {
+		const cq = cleanQuery(query);
+
+		const { data } = await request<Types.SearchContainer>(
+			urlReplacer(this.searchMultiUrl, { q: cq[0], query: cq }),
+			{ params: { includeVideos: this.includeVideos } }
+		);
+		if (!data) return [];
+
+		const items = [];
+
+		if ("d" in data) {
+			for (const item of data.d) {
+				if (!!item.qid) {
+					if (!this.searchExclude.includes(item.qid)) {
+						items.push(this.searchTitlesModel(item));
+					}
+				} else {
+					items.push(this.searchNamesModel(item));
+				}
+			}
+		}
+		return items;
+	};
+
+	private searchTitlesModel = (title: Types.Search) => ({
+		id: title.id,
+		title: title.l,
+		type: title.qid,
+		year: title.y,
+		date: title.yr,
+		poster: formatImage(title.i?.imageUrl),
+		stars: title.s,
+		rank: title.rank,
+	});
+
+	private searchNamesModel = (name: Types.Search) => ({
+		id: name.id,
+		name: name.l,
+		photo: formatImage(name.i?.imageUrl),
+		star: name.s,
+		rank: name.rank,
+	});
 }
