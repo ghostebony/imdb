@@ -24,7 +24,7 @@ export type Qid =
 	| "tvMovie"
 	| "tvSeries"
 	| "tvMiniSeries"
-	| "tvspecial"
+	| "tvSpecial"
 	| "tvEpisode"
 	| "video"
 	| "radioSeries"
