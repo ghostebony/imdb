@@ -38,28 +38,28 @@ export type SearchContainer = {
 };
 
 export type Search = {
-	i?: {
-		height: number;
-		imageUrl: string;
-		width: number;
-	};
+	i?: Image;
 	id: string;
 	l: string;
 	q?: Q;
 	qid?: Qid;
 	rank: number;
 	s: string;
-	v?: {
-		i: {
-			height: number;
-			imageUrl: string;
-			width: number;
-		};
-		id: string;
-		l: string;
-		s: string;
-	}[];
+	v?: Video[];
 	vt?: number;
 	y?: number;
 	yr?: string;
+};
+
+export type Image = {
+	height: number;
+	imageUrl: string;
+	width: number;
+};
+
+export type Video = {
+	i: Image;
+	id: string;
+	l: string;
+	s: string;
 };
