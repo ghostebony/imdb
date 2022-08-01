@@ -2,9 +2,9 @@ import type * as Types from "./types";
 import { cleanQuery, formatImage, IMDB_MEDIA_URL, request, urlReplacer } from "./utils";
 
 export default class IMDbSearch {
-	private searchUrl = IMDB_MEDIA_URL;
+	private baseUrl = IMDB_MEDIA_URL;
 
-	private searchSuggestionUrl = this.searchUrl + "/suggestion";
+	private searchSuggestionUrl = this.baseUrl + "/suggestion";
 
 	private searchMultiUrl = this.searchSuggestionUrl + "/{q}/{query}.json";
 	private searchTitleUrl = this.searchSuggestionUrl + "/titles/{q}/{query}.json";
@@ -21,7 +21,7 @@ export default class IMDbSearch {
 		if (options === undefined) return;
 
 		if (options.searchUrl !== undefined) {
-			this.searchUrl = options.searchUrl;
+			this.baseUrl = options.searchUrl;
 		}
 
 		if (options.searchExclude !== undefined) {

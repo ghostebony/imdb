@@ -4,28 +4,28 @@ import { IMDB_GRAPHQL_URL, IMDB_URL, request, urlReplacer } from "./utils";
 export default class IMDb {
 	private authCookie: string;
 
-	private imdbUrl = IMDB_URL;
-	private imdbGraphqlUrl = IMDB_GRAPHQL_URL;
+	private baseUrl = IMDB_URL;
+	private baseGraphqlUrl = IMDB_GRAPHQL_URL;
 
-	private watchlistUrl = this.imdbUrl + "/watchlist/{id}";
+	private watchlistUrl = this.baseUrl + "/watchlist/{id}";
 
 	public constructor(
 		auth: { "at-main": string; "ubid-main": string },
 		options?: {
-			imdbUrl?: string;
-			imdbGraphqlUrl?: string;
+			baseUrl?: string;
+			baseGraphqlUrl?: string;
 		}
 	) {
 		this.authCookie = `at-main=${auth["at-main"]}; ubid-main=${auth["ubid-main"]};`;
 
 		if (options === undefined) return;
 
-		if (options.imdbUrl !== undefined) {
-			this.imdbUrl = options.imdbUrl;
+		if (options.baseUrl !== undefined) {
+			this.baseUrl = options.baseUrl;
 		}
 
-		if (options.imdbGraphqlUrl !== undefined) {
-			this.imdbGraphqlUrl = options.imdbGraphqlUrl;
+		if (options.baseGraphqlUrl !== undefined) {
+			this.baseGraphqlUrl = options.baseGraphqlUrl;
 		}
 	}
 
@@ -41,7 +41,7 @@ export default class IMDb {
 				extensions: {
 					disclaimer: string;
 				};
-			}>(this.imdbGraphqlUrl, {
+			}>(this.baseGraphqlUrl, {
 				method: "POST",
 				body: {
 					query: `
@@ -70,7 +70,7 @@ export default class IMDb {
 				extensions: {
 					disclaimer: string;
 				};
-			}>(this.imdbGraphqlUrl, {
+			}>(this.baseGraphqlUrl, {
 				method: "POST",
 				body: {
 					query: `
@@ -113,7 +113,7 @@ export default class IMDb {
 				extensions: {
 					disclaimer: string;
 				};
-			}>(this.imdbGraphqlUrl, {
+			}>(this.baseGraphqlUrl, {
 				method: "POST",
 				body: {
 					query: `
@@ -138,7 +138,7 @@ export default class IMDb {
 				extensions: {
 					disclaimer: string;
 				};
-			}>(this.imdbGraphqlUrl, {
+			}>(this.baseGraphqlUrl, {
 				method: "POST",
 				body: {
 					query: `
