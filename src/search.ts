@@ -33,7 +33,7 @@ export default class IMDbSearch {
 		}
 	}
 
-	public searchMulti = async (query: string) => {
+	public multi = async (query: string) => {
 		const cq = cleanQuery(query);
 
 		const { data } = await request<Types.SearchContainer>(
@@ -48,17 +48,17 @@ export default class IMDbSearch {
 			for (const item of data.d) {
 				if (!!item.qid) {
 					if (!this.searchExclude.includes(item.qid)) {
-						items.push(this.searchTitlesModel(item));
+						items.push(this.titleModel(item));
 					}
 				} else {
-					items.push(this.searchNamesModel(item));
+					items.push(this.nameModel(item));
 				}
 			}
 		}
 		return items;
 	};
 
-	public searchTitles = async (query: string) => {
+	public title = async (query: string) => {
 		const cq = cleanQuery(query);
 
 		const { data } = await request<Types.SearchContainer>(
@@ -72,14 +72,14 @@ export default class IMDbSearch {
 		if ("d" in data) {
 			for (const title of data.d) {
 				if (!!title.qid && !this.searchExclude.includes(title.qid)) {
-					titles.push(this.searchTitlesModel(title));
+					titles.push(this.titleModel(title));
 				}
 			}
 		}
 		return titles;
 	};
 
-	public searchNames = async (query: string) => {
+	public name = async (query: string) => {
 		const cq = cleanQuery(query);
 
 		const { data } = await request<Types.SearchContainer>(
@@ -92,13 +92,13 @@ export default class IMDbSearch {
 
 		if ("d" in data) {
 			for (const name of data.d) {
-				names.push(this.searchNamesModel(name));
+				names.push(this.nameModel(name));
 			}
 		}
 		return names;
 	};
 
-	private searchTitlesModel = (title: Types.Search) => ({
+	private titleModel = (title: Types.Search) => ({
 		id: title.id,
 		title: title.l,
 		type: title.qid,
@@ -109,7 +109,7 @@ export default class IMDbSearch {
 		rank: title.rank,
 	});
 
-	private searchNamesModel = (name: Types.Search) => ({
+	private nameModel = (name: Types.Search) => ({
 		id: name.id,
 		name: name.l,
 		photo: formatImage(name.i?.imageUrl),
