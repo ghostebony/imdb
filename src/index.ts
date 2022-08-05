@@ -1,7 +1,7 @@
 import type * as Types from "./types";
 import { IMDB_GRAPHQL_URL, IMDB_URL, request, urlReplacer } from "./utils";
 
-export default class IMDb {
+export default class IMDbAccount {
 	private authCookie: string;
 
 	private baseUrl = IMDB_URL;
