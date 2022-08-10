@@ -10,7 +10,7 @@ export const cleanQuery = (query: string) =>
 
 export const formatImage = (image?: string) => {
 	if (!image) return;
-	return image.slice(image.lastIndexOf("/") + 1).replace(/._(V1.|CR)(.*?).(jpg|png)/, ".jpg");
+	return image.slice(image.lastIndexOf("/") + 1).replace(/_.*?\.(jpe?g|png)$/, (_, $2) => $2);
 };
 
 
