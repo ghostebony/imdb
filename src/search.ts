@@ -1,5 +1,6 @@
+import { http, string } from "@ghostebony/utils";
 import type * as Types from "./types";
-import { cleanQuery, formatImage, IMDB_MEDIA_URL, request, urlReplacer } from "./utils";
+import { cleanQuery, formatImage, IMDB_MEDIA_URL } from "./utils";
 
 export default class IMDbSearch {
 	private baseUrl = IMDB_MEDIA_URL;
@@ -36,8 +37,8 @@ export default class IMDbSearch {
 	public multi = async (query: string) => {
 		const cq = cleanQuery(query);
 
-		const { data } = await request<Types.SearchContainer>(
-			urlReplacer(this.searchMultiUrl, { q: cq[0], query: cq }),
+		const { data } = await http.get<Types.SearchContainer>(
+			string.replacer(this.searchMultiUrl, { q: cq[0], query: cq }),
 			{ params: { includeVideos: this.includeVideos } }
 		);
 		if (!data) return [];
@@ -61,8 +62,8 @@ export default class IMDbSearch {
 	public title = async (query: string) => {
 		const cq = cleanQuery(query);
 
-		const { data } = await request<Types.SearchContainer>(
-			urlReplacer(this.searchTitleUrl, { q: cq[0], query: cq }),
+		const { data } = await http.get<Types.SearchContainer>(
+			string.replacer(this.searchTitleUrl, { q: cq[0], query: cq }),
 			{ params: { includeVideos: this.includeVideos } }
 		);
 		if (!data) return [];
@@ -82,8 +83,8 @@ export default class IMDbSearch {
 	public name = async (query: string) => {
 		const cq = cleanQuery(query);
 
-		const { data } = await request<Types.SearchContainer>(
-			urlReplacer(this.searchNameUrl, { q: cq[0], query: cq }),
+		const { data } = await http.get<Types.SearchContainer>(
+			string.replacer(this.searchNameUrl, { q: cq[0], query: cq }),
 			{ params: { includeVideos: this.includeVideos } }
 		);
 		if (!data) return [];

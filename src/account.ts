@@ -1,5 +1,7 @@
+import { http, string } from "@ghostebony/utils";
+import type { RequestOptions } from "@ghostebony/utils/types";
 import type * as Types from "./types";
-import { IMDB_GRAPHQL_URL, IMDB_URL, request, urlReplacer } from "./utils";
+import { IMDB_GRAPHQL_URL, IMDB_URL } from "./utils";
 
 export default class IMDbAccount {
 	private authCookie: string;
@@ -57,7 +59,6 @@ export default class IMDbAccount {
 					operationName: "UpdateTitleRating",
 					variables: { rating, titleId: id },
 				},
-				headers: { "content-type": "application/json" },
 			}),
 		unrate: async (id: Types.TitleId) =>
 			this.request<{
@@ -83,21 +84,20 @@ export default class IMDbAccount {
 					operationName: "DeleteTitleRating",
 					variables: { titleId: id },
 				},
-				headers: { "content-type": "application/json" },
 			}),
 	};
 
 	public watchlist = {
 		add: async (id: Types.TitleId) =>
 			this.request<{ list_id: Types.ListId; list_item_id: `${number}`; status: number }>(
-				urlReplacer(this.watchlistUrl, { id }),
+				string.replacer(this.watchlistUrl, { id }),
 				{
 					method: "PUT",
 				}
 			),
 		remove: async (id: Types.TitleId) =>
 			this.request<{ list_id: Types.ListId; status: number }>(
-				urlReplacer(this.watchlistUrl, { id }),
+				string.replacer(this.watchlistUrl, { id }),
 				{
 					method: "DELETE",
 				}
@@ -125,7 +125,6 @@ export default class IMDbAccount {
 					operationName: "AddConstToList",
 					variables: { listId, constId: id },
 				},
-				headers: { "content-type": "application/json" },
 			}),
 		remove: async (id: Types.TitleId, listId: Types.ListId) =>
 			this.request<{
@@ -150,25 +149,16 @@ export default class IMDbAccount {
 					operationName: "RemoveConstFromList",
 					variables: { listId, constId: id },
 				},
-				headers: { "content-type": "application/json" },
 			}),
 	};
 
-	private request = <dataType>(
-		endpoint: string,
-		init: {
-			method?: "GET" | "POST" | "PUT" | "DELETE";
-			headers?: HeadersInit;
-			body?: { [key: string]: any } | FormData | string;
-		} = { method: "GET" }
-	) =>
-		request<dataType>(endpoint, {
-			method: init.method,
+	private request = <Data>(endpoint: string, options: RequestOptions) =>
+		http.custom<Data>(endpoint, {
+			method: options.method,
 			headers: {
-				accept: "application/json",
 				cookie: this.authCookie,
-				...init.headers,
+				...options.headers,
 			},
-			body: init.body,
+			body: options.body,
 		});
 }
