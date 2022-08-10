@@ -12,6 +12,9 @@
 		"build:watch": "tsc --build --watch",
 		"build:clean": "pnpm run clean && pnpm run build"
 	},
+	"dependencies": {
+		"@ghostebony/utils": "0.0.2"
+	},
 	"devDependencies": {
 		"prettier": "^2.7.1",
 		"typescript": "^4.7.4"
