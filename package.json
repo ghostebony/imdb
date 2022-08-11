@@ -2,9 +2,14 @@
 	"name": "@ghostebony/imdb",
 	"version": "0.2.2",
 	"main": "index.js",
+	"type": "module",
 	"author": "Pedro Américo",
 	"license": "MIT",
 	"repository": "github:ghostebony/imdb",
+	"keywords": [
+		"imdb",
+		"api"
+	],
 	"scripts": {
 		"preinstall": "npx only-allow pnpm",
 		"build": "tsc --build",
@@ -18,10 +23,5 @@
 	"devDependencies": {
 		"prettier": "^2.7.1",
 		"typescript": "^4.7.4"
-	},
-	"keywords": [
-		"imdb",
-		"api"
-	],
-	"type": "module"
+	}
 }
