@@ -17,6 +17,10 @@
 		"build:watch": "tsc --build --watch",
 		"build:clean": "pnpm run clean && pnpm run build"
 	},
+	"packageManager": "pnpm@7.12.2",
+	"engines": {
+		"pnpm": "^7.0.0"
+	},
 	"dependencies": {
 		"@ghostebony/utils": "0.0.3"
 	},
