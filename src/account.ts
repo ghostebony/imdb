@@ -1,5 +1,6 @@
-import { http, string } from "@ghostebony/utils";
-import type { RequestOptions } from "@ghostebony/utils/types";
+import requests from "@ghostebony/requests";
+import type { RequestOptions } from "@ghostebony/requests/types";
+import { string } from "@ghostebony/utils";
 import type * as Types from "./types";
 import { IMDB_GRAPHQL_URL, IMDB_URL } from "./utils";
 
@@ -153,7 +154,7 @@ export default class IMDbAccount {
 	};
 
 	private request = <Data>(endpoint: string, options: RequestOptions) =>
-		http.custom<Data>(endpoint, {
+		requests.custom<Data>(endpoint, {
 			method: options.method,
 			headers: {
 				cookie: this.authCookie,

@@ -1,12 +1,14 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@ghostebony/utils': 0.0.3
+  '@ghostebony/requests': ^0.1.1
+  '@ghostebony/utils': ^0.1.1
   prettier: ^2.7.1
   typescript: ^4.7.4
 
 dependencies:
-  '@ghostebony/utils': 0.0.3
+  '@ghostebony/requests': 0.1.1
+  '@ghostebony/utils': 0.1.1
 
 devDependencies:
   prettier: 2.7.1
@@ -14,8 +16,17 @@ devDependencies:
 
 packages:
 
-  /@ghostebony/utils/0.0.3:
-    resolution: {integrity: sha512-IUf0FgKNVUxil7Wt6oCwqmdFevfc/sTrLJQeJoXiqg3/7Gk0Dp7GCkygeGCA1LSpZkmZOLPhCFwWp8KQexptIA==}
+  /@ghostebony/requests/0.1.1:
+    resolution: {integrity: sha512-ID+fmPtnzzSUuCYX7lKVsoFED3GKk/oiu4WouJaHAPrJHu9+IYfd8l2sYph+GXYsGSH4tnFRT5yOT1bGk02lUw==}
+    engines: {pnpm: ^7.0.0}
+    requiresBuild: true
+    dependencies:
+      '@ghostebony/utils': 0.1.1
+    dev: false
+
+  /@ghostebony/utils/0.1.1:
+    resolution: {integrity: sha512-x0kIeqPAkP/eJZv8o02fh0i1ElEI1mCyQtbER+EyddnZHAyVlm+RNfiPYUyuADeRXpbTedfVjdwprT/ezci04g==}
+    engines: {pnpm: ^7.0.0}
     requiresBuild: true
     dev: false
 

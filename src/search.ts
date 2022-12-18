@@ -1,4 +1,5 @@
-import { http, string } from "@ghostebony/utils";
+import requests from "@ghostebony/requests";
+import { string } from "@ghostebony/utils";
 import type * as Types from "./types";
 import { cleanQuery, formatImage, IMDB_MEDIA_URL } from "./utils";
 
@@ -37,7 +38,7 @@ export default class IMDbSearch {
 	public multi = async (query: string) => {
 		const cq = cleanQuery(query);
 
-		const { data } = await http.get<Types.SearchContainer>(
+		const { data } = await requests.get<Types.SearchContainer>(
 			string.replacer(this.searchMultiUrl, { q: cq[0], query: cq }),
 			{ params: { includeVideos: this.includeVideos } }
 		);
@@ -62,7 +63,7 @@ export default class IMDbSearch {
 	public title = async (query: string) => {
 		const cq = cleanQuery(query);
 
-		const { data } = await http.get<Types.SearchContainer>(
+		const { data } = await requests.get<Types.SearchContainer>(
 			string.replacer(this.searchTitleUrl, { q: cq[0], query: cq }),
 			{ params: { includeVideos: this.includeVideos } }
 		);
@@ -83,7 +84,7 @@ export default class IMDbSearch {
 	public name = async (query: string) => {
 		const cq = cleanQuery(query);
 
-		const { data } = await http.get<Types.SearchContainer>(
+		const { data } = await requests.get<Types.SearchContainer>(
 			string.replacer(this.searchNameUrl, { q: cq[0], query: cq }),
 			{ params: { includeVideos: this.includeVideos } }
 		);
